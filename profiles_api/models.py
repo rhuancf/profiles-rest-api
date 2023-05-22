@@ -4,7 +4,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
 
-class UserProfileManager(models.Manager):
+class UserProfileManager(BaseUserManager):
   """Manager for user profiles"""
   def create_user(self, email, name, password=None):
     """Create a new user profile"""
@@ -14,7 +14,7 @@ class UserProfileManager(models.Manager):
     email = self.normalize_email(email)
     user = self.model(email=email, name=name)
 
-    user.set_passord(password)
+    user.set_password(password)
     user.save(using=self._db)
 
     return user
