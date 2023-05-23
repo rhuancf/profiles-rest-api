@@ -16,7 +16,12 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "~> 20200304.0.0"
  
   config.vm.network "forwarded_port", guest: 8000, host: 8000
- 
+
+  config.vm.provider :virtualbox do |v|
+    v.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
+    v.customize ["modifyvm", :id, "--uartmode1", "file", File::NULL]
+  end
+  
   config.vm.provision "shell", inline: <<-SHELL
     systemctl disable apt-daily.service
     systemctl disable apt-daily.timer
