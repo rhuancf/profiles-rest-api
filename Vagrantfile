@@ -16,10 +16,16 @@ Vagrant.configure("2") do |config|
   config.vm.box_version = "~> 20200304.0.0"
  
   config.vm.network "forwarded_port", guest: 8000, host: 8000
+  config.vm.boot_timeout = 600
 
   config.vm.provider :virtualbox do |v|
     v.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
     v.customize ["modifyvm", :id, "--uartmode1", "file", File::NULL]
+    v.customize ["modifyvm", :id, "--vram", "128"]
+    v.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    v.gui = true
+    v.memory = "1024"
+    v.cpus = 1
   end
   
   config.vm.provision "shell", inline: <<-SHELL
