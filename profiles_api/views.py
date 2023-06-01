@@ -120,6 +120,9 @@ class UserProfileViewSet(viewsets.ModelViewSet):
 
 
 class UserLoginApiView(ObtainAuthToken):
+  def get(self, request, format=None):
+    return Response({'message': 'Bem vindo! Envie as credenciais via POST para gerar um token.'})
+
   """Handle creating user authentication tokens"""
   renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
